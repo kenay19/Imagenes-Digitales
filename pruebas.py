@@ -118,16 +118,16 @@ def selectMorfo():
         print("6) esqueleto")
         opcion = int(input("Selecciona uno: "))
         if opcion == 1:
-            morfologia.erosion('img/Morfologia/test.jpg', 0)
+            morfologia.erosion('img/Morfologia/test.jpg', int(input('De un umbral: ')))
         elif opcion == 2:
-            morfologia.dilatacion('img/Morfologia/test.jpg', 0)
+            morfologia.dilatacion('img/Morfologia/test.jpg', int(input('De un umbral: ')))
             
         elif opcion == 3:
-            morfologia.apertura('img/Morfologia/test.jpg', 0)
+            morfologia.apertura('img/Morfologia/test.jpg', int(input('De un umbral: ')))
         elif opcion == 4:
-            morfologia.cierre('img/Morfologia/test.jpg', 0)
+            morfologia.cierre('img/Morfologia/test.jpg', int(input('De un umbral: ')))
         elif opcion == 5: 
-            morfologia.grad('img/Morfologia/test.jpg', 0)
+            morfologia.grad('img/Morfologia/test.jpg', int(input('De un umbral: ')))
         elif opcion == 6:
             morfologia.esqueleto('img/Morfologia/test.jpg', 1)
         opcion = input("Desea Continuar con Alguna Otra Operacion (S/N): ")    
@@ -173,11 +173,11 @@ def selectSeg():
         print("3) Por transformada hough")
         opcion = int(input("Selecciona uno: "))
         if opcion == 1:
-            seg.HistogramSegmentation('img/test.jpg',int(input('Ingrese un umbral: ')))
+            seg.HistogramSegmentation('img/segmentacion/test.jpg',int(input('Ingrese un umbral: ')))
         elif opcion == 2:
             colors.YCbCrtoBGR('img/colors/YCbCr/YCbCr.jpg')
         elif opcion == 3:
-            seg.TransHough('img/test.jpg')
+            seg.TransHough('img/segmentacion/test.jpg')
         opcion = input("Desea Continuar con Alguna Otra Operacion (S/N): ")
 
 def selectMain():
