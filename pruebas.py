@@ -10,6 +10,7 @@ import funciones.ruido as ruido
 import funciones.filros as filtros
 import funciones.Morfologia as morfologia
 import funciones.colors as colors
+import funciones.segmentacion as seg
 
 def selectRuidos() :
     opcion = "s"
@@ -25,9 +26,25 @@ def selectRuidos() :
         elif  opcion == 3:
             ruido.SalyPimienta('img/ruido/test.jpg',1,float(input("Da un porcentaje de ruido (de 0 a 1): ")))
         opcion = input("Desea Continuar con Alguna Otra Operacion (S/N): ")
-
+        
+def chooseImg():
+    print("1) Aplicar en sal")
+    print("2) Aplicar en Pimienta")
+    print("3) Aplicar en Sal y Pimienta")
+    try:
+        opcion = int(input("Elige una opcion: "))
+        if opcion >= 1 and opcion <= 3:
+            return opcion-1
+        else:
+            print("Elige un un numero dentro de las opciones")
+            return chooseImg()-1
+    except:
+        print("Digita un numero")
+        return chooseImg()-1
+    
 def selectFiltros():
     opcion = "s"
+    opciones = ['img/ruido/Sal.jpg','img/ruido/Pimienta.jpg','img/ruido/SalyPimienta.jpg']
     while opcion == "S" or opcion =="s":
         print("1) Media Aritmetica")
         print("2) Media Geometrica")
@@ -41,25 +58,25 @@ def selectFiltros():
         print("10) Filtro Gaussiano")
         opcion = int(input("Seleccionar una operacion: "))
         if opcion == 1:
-            filtros.mediaAritmetica('img/filtros/sal.jpg',1)
+            filtros.mediaAritmetica(opciones[chooseImg()],1)
         elif opcion == 2:
-            filtros.mediaGeometrica('img/filtros/sal.jpg',1)
+            filtros.mediaGeometrica(opciones[chooseImg()],1)
         elif  opcion == 3:
-            filtros.mediaHarmonica('img/filtros/sal.jpg',1)
+            filtros.mediaHarmonica(opciones[chooseImg()],1)
         elif opcion == 4:
-            filtros.mediana('img/filtros/sal.jpg',1)
+            filtros.mediana(opciones[chooseImg()],1)
         elif opcion == 5:
-            filtros.maximo('img/filtros/sal.jpg',1)
+            filtros.maximo(opciones[chooseImg()],1)
         elif opcion == 6:
-            filtros.minimo('img/filtros/sal.jpg',1)
+            filtros.minimo(opciones[chooseImg()],1)
         elif opcion == 7:
-            filtros.puntoMedio('img/filtros/sal.jpg',1)
+            filtros.puntoMedio(opciones[chooseImg()],1)
         elif opcion == 8:
-            filtros.mediaAlfaRecortado('img/filtros/sal.jpg',1,int(input("introduce un numero entre 0 y 9: ")))
+            filtros.mediaAlfaRecortado(opciones[chooseImg()],1,int(input("introduce un numero entre 0 y 9: ")))
         elif opcion == 9:
-            filtros.ruidoLocalAdaptativo('img/filtros/sal.jpg',1)
+            filtros.ruidoLocalAdaptativo(opciones[chooseImg()],1)
         elif opcion == 10:
-            filtros.Gaussiano('img/filtros/sal.jpg',1)
+            filtros.Gaussiano(opciones[chooseImg()],1)
         opcion = input("Desea Continuar con Alguna Otra Operacion (S/N): ")
         
         
@@ -72,6 +89,7 @@ def selectBordes():
         print("4) Plano de Bits")
         print("5) Sobel")
         print("6) Prewwitt")
+        print("7) Cany")
         opcion = int(input("Selecciona uno: "))
         if opcion == 1:
             filtros.EstContraste('img/Bordes/test.jpg',1)
@@ -85,6 +103,8 @@ def selectBordes():
             filtros.ConvSobel('img/Bordes/test.jpg',0,int(input("Da un numero: ")))
         elif opcion == 6:
             filtros.Prewitt('img/Bordes/test.jpg',0,int(input("Da un numero: ")))
+        elif opcion == 7:
+            filtros.Canny('img/Bordes/test.jpg')
         opcion = input("Desea Continuar con Alguna Otra Operacion (S/N): ")    
         
 def selectMorfo():
@@ -121,6 +141,9 @@ def selectColor():
         print("4) HSI a RGB") 
         print("5) RGB a CMYK")
         print("6) CMYK a RGB")
+        print("7) Separar RGB")
+        print("8) Separar HSI")
+        print("9) Separar YCbCr")
         opcion = int(input("Selecciona uno: "))
         if opcion == 1:
             colors.BGRtoYCbCr('img/colors/test.jpg')
@@ -133,9 +156,30 @@ def selectColor():
         elif opcion == 5: 
             colors.BGRtoCMYK('img/colors/test.jpg')
         elif opcion == 6:
-            colors.CMYKtoBGR('img/colors/CMYK/CMYK.tiff')
+            colors.CMYKtoBGR('img/colors/CMYK/CMYK.pdf')
+        elif opcion == 7:
+            colors.separetaRGB('img/colors/test.jpg')
+        elif opcion == 8:
+            colors.separateHSI('img/colors/test.jpg')
+        elif opcion == 9:
+            colors.separateYCbCr('img/colors/test.jpg')
         opcion = input("Desea Continuar con Alguna Otra Operacion (S/N): ")
        
+def selectSeg():
+    opcion = "s"
+    while opcion == "S" or opcion =="s":
+        print("1) Por historgrama")
+        print("2) Por Bordes")
+        print("3) Por transformada hough")
+        opcion = int(input("Selecciona uno: "))
+        if opcion == 1:
+            seg.HistogramSegmentation('img/test.jpg',int(input('Ingrese un umbral: ')))
+        elif opcion == 2:
+            colors.YCbCrtoBGR('img/colors/YCbCr/YCbCr.jpg')
+        elif opcion == 3:
+            seg.TransHough('img/test.jpg')
+        opcion = input("Desea Continuar con Alguna Otra Operacion (S/N): ")
+
 def selectMain():
     opcion = "s"
     while opcion == "S" or opcion =="s":
@@ -144,6 +188,7 @@ def selectMain():
         print("3) Deteccion de Bordes")
         print("4) Colores")
         print("5) Morfologia")
+        print('6) Segmentacion')
         opcion = int(input("Seleccionar un tipo: "))
         if opcion == 1:
             selectRuidos()
@@ -155,6 +200,8 @@ def selectMain():
             selectColor()
         elif opcion == 5:
             selectMorfo()
+        elif opcion == 6:
+            selectSeg()
         opcion = input("Desea Continuar con Alguna Otra Operacion (S/N): ")
         
         

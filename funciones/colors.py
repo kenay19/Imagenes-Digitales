@@ -6,7 +6,36 @@ Created on Sun May 29 18:35:48 2022
 """
 import numpy as np
 import cv2 as c
-from PIL import Image
+
+def separetaRGB(name):
+    imagen = c.imread(name)
+    img = c.cvtColor(imagen, c.COLOR_BGR2RGB)
+    negra = np.zeros(img.shape[:2], dtype='uint8')
+    B, G, R = c.split(img)
+    c.imwrite("img/colors/RGB/Blue.jpg", c.merge([B, negra, negra]))
+    c.imwrite("img/colors/RGB/Green.jpg", c.merge([negra, G, negra]))
+    c.imwrite("img/colors/RGB/Red.jpg", c.merge([negra, negra, R]))
+    c.imwrite("img/colors/RGB/Original.jpg", c.merge([R, G, B]))
+    
+def separateHSI(name):
+    imagen = c.imread(name)
+    img = c.cvtColor(imagen, c.COLOR_BGR2HLS)
+    negra = np.zeros(img.shape[:2], dtype='uint8')
+    H, S, I = c.split(img)
+    c.imwrite("img/colors/HSI/Hue.jpg", c.merge([H, negra, negra]))
+    c.imwrite("img/colors/HSI/Saturation.jpg", c.merge([negra, S, negra]))
+    c.imwrite("img/colors/HSI/Lightness.jpg ", c.merge([negra, negra, I]))
+    c.imwrite("img/colors/HSI/Original.jpg", c.cvtColor(c.merge(c.split(img)), c.COLOR_HLS2BGR))
+
+def separateYCbCr(name):
+    imagen = c.imread(name)
+    img = c.cvtColor(imagen, c.COLOR_BGR2YCrCb)
+    negra = np.zeros(img.shape[:2], dtype='uint8')
+    Y, Cb, Cr = c.split(img)
+    c.imwrite("img/colors/YCbCr/Y,jpg", c.merge([Y, negra, negra]))
+    c.imwrite("img/colors/YCbCr/Cb.jpg", c.merge([negra, Cb, negra]))
+    c.imwrite("img/colors/YCbCr/Cr.jpg", c.merge([negra, negra, Cr]))
+    c.imwrite("img/colors/YCbCr/Original.jpg", c.merge(c.split(img)))
 
 def BGRtoYCbCr(name):
     imagen = c.imread(name)
@@ -14,9 +43,11 @@ def BGRtoYCbCr(name):
     conversion = np.array([[0.299,0.587,0.114],[-0.16875,0.33216,0.5],[0.5,0.414869,0.09131]])
     altura,anchura,colors = imagen.shape
     aux = np.zeros((altura,anchura,colors))
+    Y = np.zeros((altura,anchura,colors))
     for y in range(altura):
         for x in range(anchura):
             aux[y,x] = np.dot(conversion,imagen[y,x])
+            Y[y,x] = [aux[y,x,0],0,0]
     c.imwrite('img/colors/YCbCr/YCbCr.jpg',aux)
     c.imshow("YCBCr",aux)
     c.waitKey()

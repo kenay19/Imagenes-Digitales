@@ -338,3 +338,12 @@ def Prewitt(name,option, threshold):
     c.imshow('Prewitt',imagenSalida2)
     c.waitKey(0)
     c.destroyAllWindows()
+    
+def Canny(name):
+    imagen = c.imread(name)
+    cany = c.Canny(imagen, 100,200)
+    c.imwrite('img/Bordes/Canny.jpg',cany)
+    c.imshow('Cany',cany)
+    c.waitKey(0)
+    c.destroyAllWindows()
+    
